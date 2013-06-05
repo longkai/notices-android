@@ -3,6 +3,7 @@
 
     <declare-styleable name="theme_dependent">
         <attr name="refresh_icon" format="reference" />
+        <attr name="user_icon" format="reference" />
     </declare-styleable>
 
 </resources>

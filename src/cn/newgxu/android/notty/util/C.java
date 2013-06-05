@@ -30,11 +30,18 @@ package cn.newgxu.android.notty.util;
  */
 public final class C {
 
+	public static final String URI = "uri";
+	
 	public static final String	DOMAIN		= "http://lab.newgxu.cn/info";
-	public static final String	ID			= "_id";
+	public static final String	_ID			= "_id";
+	public static final String	ID			= "id";
+	public static final String	DESC_SORT	= " _id DESC";
+	public static final String	ASC_SORT	= " _id ASC";
 
 	public static final String	NOTICES		= "notices";
+	public static final String	NOTICE		= "notice";
 	public static final String	USERS		= "users";
+	public static final String	USER		= "user";
 	public static final String	AUTHORITY	= "cn.newgxu.android.notty.provider";
 	public static final String	BASE_URI	= "content://" + AUTHORITY + "/";
 	
@@ -49,8 +56,8 @@ public final class C {
 		public static final String		USER_ID				= "uid";
 		public static final String		USER_NAME			= "username";
 		
-		public static final String[] NOTTY_COLUMNS = {ID, ADDED_DATE, CLICK_TIMES, DOC_NAME, TITLE, USER_ID, USER_NAME};
-		public static final String[] LATEST_NOTICE_ID = {"max(" + ID + ")"};
+		public static final String[] NOTTY_COLUMNS = {_ID, ADDED_DATE, CLICK_TIMES, DOC_NAME, TITLE, USER_ID, USER_NAME};
+		public static final String[] LATEST_NOTICE_ID = {"max(" + _ID + ")"};
 	}
 	
 	public static final class user {
@@ -59,6 +66,8 @@ public final class C {
 		public static final String	CONTACT		= "contact";
 		public static final String	AUTHED_NAME	= "authed_name";
 		public static final String	JOIN_TIME	= "join_time";
+		
+		public static final String[] USER_ROW = {_ID, AUTHED_NAME};
 	}
 	
 }

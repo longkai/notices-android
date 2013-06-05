@@ -22,64 +22,47 @@
  */
 package cn.newgxu.android.notty.adapter;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import cn.newgxu.android.notty.ui.AuthedUsersFragment;
+import cn.newgxu.android.notty.util.C;
+import android.content.Context;
+import android.database.Cursor;
+import android.support.v4.widget.CursorAdapter;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 /**
- * app主界面pager适配器。
+ * 认证用户列表适配器。
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
- * @since  2013-6-5
+ * @since  2013-6-6
  */
-public class NottyPagerAdapter extends FragmentStatePagerAdapter {
+public class UsersAdapter extends CursorAdapter {
 
-	private static final int	PAGER_COUNT		= 3;
-	/** 认证用户列表 */
-	public static final int		AUTHED_USERS	= 0;
-	/** 最新信息列表 */
-	public static final int		LATEST_NOTICES	= 1;
-	/** 用户自服务 */
-	public static final int		USER_SERVICE	= 2;
+	public UsersAdapter(Context context) {
+		super(context, null, 0);
+	}
+
+	private static class ViewHolder {
+		TextView authedName;
+		int authedNameIndex;
+	}
 	
-	
-	private Fragment[] fragments;
-	
-	public NottyPagerAdapter(FragmentManager fm) {
-		super(fm);
-		fragments = new Fragment[PAGER_COUNT];
-		for (int i = 0; i < PAGER_COUNT; i++) {
-			fragments[i] = new AuthedUsersFragment();
-		}
+	@Override
+	public View newView(Context context, Cursor cursor, ViewGroup parent) {
+		View v = LayoutInflater.from(context).
+				inflate(android.R.layout.simple_list_item_1, null);
+		ViewHolder holder = new ViewHolder();
+		holder.authedName = (TextView) v.findViewById(android.R.id.text1);
+		holder.authedNameIndex = cursor.getColumnIndexOrThrow(C.user.AUTHED_NAME);
+		v.setTag(holder);
+		return v;
 	}
 
 	@Override
-	public Fragment getItem(int position) {
-		return fragments[position];
+	public void bindView(View view, Context context, Cursor cursor) {
+		ViewHolder holder = (ViewHolder) view.getTag();
+		holder.authedName.setText(cursor.getString(holder.authedNameIndex));
 	}
 
-	@Override
-	public int getCount() {
-		return PAGER_COUNT;
-	}
-
-	@Override
-	public CharSequence getPageTitle(int position) {
-		String title = null;
-		switch (position) {
-		case AUTHED_USERS:
-			title = "认证列表";
-			break;
-		default:
-		case LATEST_NOTICES:
-			title = "最新信息";
-			break;
-		case USER_SERVICE:
-			title = "用户中心";
-			break;
-		}
-		return title;
-	}
-	
 }

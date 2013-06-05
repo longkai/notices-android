@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -6,11 +6,16 @@
     -->
     <style name="AppTheme" parent="android:Theme.Light">
        <item name="refresh_icon">@drawable/navigation_refresh_light</item>
+       <item name="user_icon">@drawable/social_person_light</item>
     </style>
     
     <style name="AppTheme_Dark" parent="android:Theme.Black">
         <item name="refresh_icon">@drawable/navigation_refresh_dark</item>
+	    <item name="user_icon">@drawable/social_person_dark</item>
     </style>
 
+    <style name="page_padding">
+        <item name="android:padding">5dp</item>
+    </style>
 
 </resources>

@@ -9,4 +9,11 @@
     <string name="light_theme">日间模式</string>
     <string name="dark_theme">夜间模式</string>
     
+    <string name="about">关于Ta：%1$s</string>
+    <string name="join_time">加入时间：%1$s</string>
+    <string name="org">Ta是：%1$s</string>
+    <string name="contact">联系方式：%1$s</string>
+    <string name="close">关闭</string>
+    <string name="no_such_man">对不起，查无此人-_-</string>
+    
 </resources>

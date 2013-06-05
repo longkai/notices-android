@@ -22,12 +22,15 @@
  */
 package cn.newgxu.android.notty;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import cn.longkai.android.util.StrictModeUtils;
 import cn.newgxu.android.notty.adapter.NottyPagerAdapter;
+import cn.newgxu.android.notty.service.FetchService;
+import cn.newgxu.android.notty.util.C;
 import cn.newgxu.android.notty.util.ThemeUtils;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -76,6 +79,13 @@ public class MainActivity extends SherlockFragmentActivity {
 			break;
 		case R.id.light_theme:
 			ThemeUtils.apply(this, ThemeUtils.LIGHT_THEME);
+			break;
+		case R.id.refresh:
+			Intent intent = new Intent(this, FetchService.class);
+			String[] uris = {C.BASE_URI + C.NOTICES, C.BASE_URI + C.USERS};
+			intent.putExtra("uris", uris);
+			intent.putExtra(C.URI, "http://lab.newgxu.cn/info/notices?type=1&count=10");
+			startService(intent);
 			break;
 		default:
 			break;

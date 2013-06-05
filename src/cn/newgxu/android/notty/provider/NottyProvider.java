@@ -31,6 +31,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.text.TextUtils;
 import cn.newgxu.android.notty.R;
 import cn.newgxu.android.notty.util.C;
 
@@ -95,6 +96,7 @@ public class NottyProvider extends ContentProvider {
 			cursor = db.query(C.NOTICES, projection, selection, selectionArgs, null, null, null);
 			break;
 		case NOTICES:
+			sortOrder = TextUtils.isEmpty(sortOrder) ? C.DESC_SORT : sortOrder;
 			cursor = db.query(C.NOTICES, projection, selection, selectionArgs, null, null, sortOrder);
 			break;
 		case USER:
@@ -102,6 +104,7 @@ public class NottyProvider extends ContentProvider {
 			cursor = db.query(C.USERS, projection, selection, selectionArgs, null, null, null);
 			break;
 		case USERS:
+			sortOrder = TextUtils.isEmpty(sortOrder) ? C.DESC_SORT : sortOrder;
 			cursor = db.query(C.USERS, projection, selection, selectionArgs, null, null, sortOrder);
 			break;
 		default:
@@ -183,7 +186,7 @@ public class NottyProvider extends ContentProvider {
 		public void onCreate(SQLiteDatabase db) {
 			StringBuilder sql = new StringBuilder("CREATE TABLE ");
 			sql.append(C.NOTICES).append(" (")
-				.append(C.ID).append(" integer primary key, ")
+				.append(C._ID).append(" integer primary key, ")
 				.append(C.notice.ADDED_DATE).append(" varchar(30), ")
 				.append(C.notice.CLICK_TIMES).append(" int, ")
 				.append(C.notice.CONTENT).append(" text, ")
@@ -197,7 +200,7 @@ public class NottyProvider extends ContentProvider {
 			
 			sql.setLength(0);
 			sql.append("CREATE TABLE ").append(C.USERS).append(" (")
-				.append(C.ID).append(" integer primary key, ")
+				.append(C._ID).append(" integer primary key, ")
 				.append(C.user.ABOUT).append(" text, ")
 				.append(C.user.AUTHED_NAME).append(" varchar(50), ")
 				.append(C.user.CONTACT).append(" varchar(50), ")

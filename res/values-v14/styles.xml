@@ -7,10 +7,12 @@
     -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="refresh_icon">@drawable/navigation_refresh_dark</item>
+        <item name="user_icon">@drawable/social_person_light</item>
     </style>
     
     <style name="AppTheme_Dark" parent="android:Theme.Holo">
         <item name="refresh_icon">@drawable/navigation_refresh_dark</item>
+        <item name="user_icon">@drawable/social_person_dark</item>
     </style>
 
 </resources>
