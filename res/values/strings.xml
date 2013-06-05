@@ -1,6 +1,12 @@
 <resources>
 
     <string name="app_name">校园信息</string>
-    <string name="app_title">雨无声校园信息平台</string>
+    <string name="app_title">轻松获取校园信息</string>
 
+    <string name="menu_refresh">刷新</string>
+    <string name="menu_settings">设置</string>
+    <string name="change_theme">更改主题</string>
+    <string name="light_theme">日间模式</string>
+    <string name="dark_theme">夜间模式</string>
+    
 </resources>

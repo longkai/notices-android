@@ -20,50 +20,44 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package cn.newgxu.android.notty;
+package cn.newgxu.android.notty.util;
 
-import android.os.Bundle;
-import cn.newgxu.android.notty.util.ThemeUtils;
-
-import com.actionbarsherlock.app.SherlockFragmentActivity;
-import com.actionbarsherlock.view.Menu;
-import com.actionbarsherlock.view.MenuItem;
+import cn.newgxu.android.notty.R;
+import android.app.Activity;
+import android.content.Intent;
 
 /**
- * 应用程序主界面。
+ * 与app主题相关，目前只有亮色和暗色两个系统主题。
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
  * @since  2013-6-5
  */
-public class MainActivity extends SherlockFragmentActivity {
+public class ThemeUtils {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		ThemeUtils.switchTheme(this);
-		setContentView(R.layout.main);
-		getSupportActionBar().setTitle(R.string.app_title);
+	/** our app' s current theme */
+	private static int		currentTheme;
+
+	/** app' s light theme */
+	public static final int	LIGHT_THEME	= 1;
+	/** app' s theme */
+	public static final int	DARK_THEME	= 2;
+	
+	public static final void apply(Activity activity, int theme) {
+		currentTheme = theme;
+		activity.finish();
+		activity.startActivity(new Intent(activity, activity.getClass()));
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.dark_theme:
-			ThemeUtils.apply(this, ThemeUtils.DARK_THEME);
-			break;
-		case R.id.light_theme:
-			ThemeUtils.apply(this, ThemeUtils.LIGHT_THEME);
-			break;
+	
+	public static final void switchTheme(Activity activity) {
+		switch (currentTheme) {
 		default:
+		case LIGHT_THEME:
+			activity.setTheme(R.style.AppTheme);
+			break;
+		case DARK_THEME:
+			activity.setTheme(R.style.AppTheme_Dark);
 			break;
 		}
-		return true;
 	}
 	
 }

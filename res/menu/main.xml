@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/refresh"
+        android:icon="?attr/refresh_icon"
+        android:showAsAction="always"
+        android:title="@string/menu_refresh"/>
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_action_overflow"
+        android:showAsAction="always"
+        android:title="@string/menu_settings">
+        <menu>
+            <item
+                android:id="@+id/change_theme"
+                android:icon="@drawable/content_picture_dark"
+                android:showAsAction="never"
+                android:title="@string/change_theme">
+                <menu >
+                    <item
+                        android:id="@+id/light_theme"
+                        android:icon="@drawable/device_access_brightness_high_dark"
+                        android:showAsAction="never"
+                        android:title="@string/light_theme"/>
+                    <item
+                        android:id="@+id/dark_theme"
+                        android:icon="@drawable/device_access_bightness_low_dark"
+                        android:showAsAction="never"
+                        android:title="@string/dark_theme"/>
+                </menu>
+            </item>
+        </menu>
+    </item>
+
+</menu>
