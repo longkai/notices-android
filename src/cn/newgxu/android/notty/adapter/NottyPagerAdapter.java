@@ -26,6 +26,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import cn.newgxu.android.notty.ui.AuthedUsersFragment;
+import cn.newgxu.android.notty.ui.NoticesFragment;
 
 /**
  * app主界面pager适配器。
@@ -49,8 +50,17 @@ public class NottyPagerAdapter extends FragmentStatePagerAdapter {
 	public NottyPagerAdapter(FragmentManager fm) {
 		super(fm);
 		fragments = new Fragment[PAGER_COUNT];
+		Fragment fragment = null;
 		for (int i = 0; i < PAGER_COUNT; i++) {
-			fragments[i] = new AuthedUsersFragment();
+			switch (i) {
+			default:
+			case AUTHED_USERS:
+				fragment = new AuthedUsersFragment();
+				break;
+			case LATEST_NOTICES:
+				fragment = new NoticesFragment();
+			}
+			fragments[i] = fragment;
 		}
 	}
 
