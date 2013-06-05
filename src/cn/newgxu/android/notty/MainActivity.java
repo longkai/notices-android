@@ -23,6 +23,11 @@
 package cn.newgxu.android.notty;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerTabStrip;
+import android.support.v4.view.ViewPager;
+import cn.longkai.android.util.StrictModeUtils;
+import cn.newgxu.android.notty.adapter.NottyPagerAdapter;
 import cn.newgxu.android.notty.util.ThemeUtils;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -37,12 +42,24 @@ import com.actionbarsherlock.view.MenuItem;
  */
 public class MainActivity extends SherlockFragmentActivity {
 
+	private static final String TAG = MainActivity.class.getSimpleName();
+	
+	private FragmentManager fm;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		StrictModeUtils.useStrictMode(getApplicationContext()); // enable strict
 		ThemeUtils.switchTheme(this);
 		setContentView(R.layout.main);
 		getSupportActionBar().setTitle(R.string.app_title);
+		
+		fm = getSupportFragmentManager();
+		ViewPager pager = (ViewPager) findViewById(R.id.pager);
+		pager.setAdapter(new NottyPagerAdapter(fm));
+		pager.setCurrentItem(NottyPagerAdapter.LATEST_NOTICES);
+		PagerTabStrip pagerTabStrip = (PagerTabStrip) pager.findViewById(R.id.pager_tab_strip);
+		pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.info));
 	}
 
 	@Override
