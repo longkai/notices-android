@@ -16,4 +16,6 @@
     <string name="close">关闭</string>
     <string name="no_such_man">对不起，查无此人-_-</string>
     
+    <string name="default_doc_name">点击下载附件</string>
+    <string name="doc">附件下载：</string>
 </resources>

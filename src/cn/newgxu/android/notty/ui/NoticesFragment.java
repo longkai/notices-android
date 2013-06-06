@@ -22,8 +22,10 @@
  */
 package cn.newgxu.android.notty.ui;
 
+import cn.newgxu.android.notty.activity.NoticeActivity;
 import cn.newgxu.android.notty.adapter.NoticesAdapter;
 import cn.newgxu.android.notty.util.C;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -60,7 +62,9 @@ public class NoticesFragment extends ListFragment implements LoaderCallbacks<Cur
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
-		super.onListItemClick(l, v, position, id);
+		Intent intent = new Intent(getActivity(), NoticeActivity.class);
+		intent.setData(Uri.parse(C.BASE_URI + C.NOTICES + "/" + id));
+		getActivity().startActivity(intent);
 	}
 	
 	@Override

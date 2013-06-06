@@ -32,7 +32,7 @@ public final class C {
 
 	public static final String URI = "uri";
 	
-	public static final String	DOMAIN		= "http://lab.newgxu.cn/info";
+	public static final String	DOMAIN		= "http://lab.newgxu.cn";
 	public static final String	_ID			= "_id";
 	public static final String	ID			= "id";
 	public static final String	DESC_SORT	= " _id DESC";
