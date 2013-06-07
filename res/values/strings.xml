@@ -15,7 +15,17 @@
     <string name="contact">联系方式：%1$s</string>
     <string name="close">关闭</string>
     <string name="no_such_man">对不起，查无此人-_-</string>
-    
+    <string name="no_such_notice">对不起，查无此信息-_-</string>
     <string name="default_doc_name">点击下载附件</string>
     <string name="doc">附件下载：</string>
+    
+    <string name="login">已经认证？现在登陆！</string>
+    <string name="go_to_auth">获得授权？请戳这里！</string>
+    <string name="auth_uri">http://lab.newgxu.cn/resources/html/info/auth.html</string>
+    
+    <string name="login_box">登陆:-)</string>
+    <string name="account">请输入您的账号</string>
+    <string name="password">请输入您的密码</string>
+    <string name="ok">确定</string>
+    <string name="no">取消</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="descriptions">
+        <item>雨无声校园信息发布平台是一个轻松获取校园信息的地方。</item>
+        <item>这上面发表的信息会出现在雨无声新闻网，论坛上以及校园信息发布平台的 Android客户端上-:)</item>
+        <item>任何院校机构，学生组织经过雨无声的认证后均可在其上发布信息。</item>
+        <item>校园信息发布平台是开放源代码与API接口的，详见雨无声实验室首页</item>
+    </string-array>
+</resources>

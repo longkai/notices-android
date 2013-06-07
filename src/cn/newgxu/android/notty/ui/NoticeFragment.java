@@ -37,6 +37,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.Toast;
 import cn.newgxu.android.notty.R;
 import cn.newgxu.android.notty.util.C;
 
@@ -109,6 +110,10 @@ public class NoticeFragment extends SherlockFragment {
 
 		@Override
 		protected void onPostExecute(Map<String, CharSequence> result) {
+			if (result == null) {
+				Toast.makeText(getActivity(), R.string.no_such_notice, Toast.LENGTH_SHORT).show();
+				return;
+			}
 			content.loadDataWithBaseURL("", result.get(C.notice.CONTENT).toString(), "text/html", "utf-8", "");
 			actionBar.setTitle(result.get(C.notice.TITLE));
 			actionBar.setSubtitle(result.get(C.notice.ADDED_DATE) + "  " + result.get(C.notice.USER_NAME));
