@@ -45,6 +45,15 @@ public final class C {
 	public static final String	AUTHORITY	= "cn.newgxu.android.notty.provider";
 	public static final String	BASE_URI	= "content://" + AUTHORITY + "/";
 	
+	public static final String	STATUS		= "status";
+	public static final String	REASON		= "reason";
+	public static final String	MSG			= "msg";
+	public static final int		OK			= 1;
+	public static final int		NO			= 0;
+	
+	public static final String ACCOUNT = "account";
+	public static final String PWD = "pwd";
+	
 	public static final class notice {
 		public static final String		TITLE				= "title";
 		public static final String		CONTENT				= "content";

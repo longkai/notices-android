@@ -5,7 +5,7 @@
     android:orientation="vertical">
     
 	<EditText
-	    android:id="@+id/username"
+	    android:id="@+id/account"
 	    android:hint="@string/account"
 	    android:layout_width="match_parent"
 	    android:singleLine="true"

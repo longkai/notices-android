@@ -25,6 +25,7 @@ package cn.newgxu.android.notty;
 import android.app.Application;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.preference.PreferenceManager;
 import cn.longkai.android.util.HttpClientProvider;
 import cn.longkai.android.util.L;
 
@@ -49,6 +50,7 @@ public class NottyApplication extends Application implements OnSharedPreferenceC
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		sApp = this;
 		HttpClientProvider.init(sApp); // 初始化http client
 	}

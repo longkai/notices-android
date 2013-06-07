@@ -23,9 +23,12 @@
     <string name="go_to_auth">获得授权？请戳这里！</string>
     <string name="auth_uri">http://lab.newgxu.cn/resources/html/info/auth.html</string>
     
-    <string name="login_box">登陆:-)</string>
+    <string name="login_box">登陆 :-)</string>
     <string name="account">请输入您的账号</string>
     <string name="password">请输入您的密码</string>
     <string name="ok">确定</string>
     <string name="no">取消</string>
+    <string name="login_error">登陆异常！请稍后再试！</string>
+    <string name="login_ok">登陆成功^_^</string>
+    <string name="login_no">登陆失败-_-</string>
 </resources>
