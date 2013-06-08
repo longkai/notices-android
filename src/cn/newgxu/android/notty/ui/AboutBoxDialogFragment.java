@@ -20,52 +20,43 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package cn.newgxu.android.notty;
+package cn.newgxu.android.notty.ui;
 
-import android.app.Application;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.preference.PreferenceManager;
-import cn.longkai.android.util.HttpClientProvider;
-import cn.longkai.android.util.L;
-import cn.newgxu.android.notty.util.C;
+import cn.longkai.android.util.AppUtils;
+import cn.newgxu.android.notty.R;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.text.SpannableString;
+import android.text.util.Linkify;
+import android.view.View;
+import android.widget.TextView;
 
 /**
- * app全局对象
+ * 关于。
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
- * @since  2013-6-5
+ * @since  2013-6-8
  */
-public class NottyApplication extends Application implements OnSharedPreferenceChangeListener {
-	
-	private static final String TAG = NottyApplication.class.getSimpleName();
-	public static final String ACTION = System.currentTimeMillis() + "";
-	
-	private static NottyApplication sApp;
-	
-	public static NottyApplication getApp() {
-		return sApp;
-	}
-
-	private SharedPreferences prefs;
-	
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		sApp = this;
-		HttpClientProvider.init(sApp); // 初始化http client
-	}
+public class AboutBoxDialogFragment extends DialogFragment {
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
-		L.d(TAG, "changed key: %s", key);
-	}
-	
-	public SharedPreferences getPrefs() {
-		return this.prefs;
+	public Dialog onCreateDialog(Bundle savedInstanceState) {
+		View v = getActivity().getLayoutInflater().inflate(R.layout.about, null);
+		TextView tv = (TextView) v.findViewById(android.R.id.text1);
+		SpannableString aboutTxt = new SpannableString(getString(R.string.version) + ": "
+				+ AppUtils.version(getActivity()) + "\n" + getString(R.string.about_text));
+		tv.setText(aboutTxt);
+		Linkify.addLinks(tv, Linkify.ALL);
+		return new AlertDialog.Builder(getActivity())
+			.setTitle(getString(R.string.about))
+			.setCancelable(true)
+			.setIcon(R.drawable.ic_launcher)
+			.setPositiveButton(R.string.ok, null)
+			.setView(v)
+			.create();
 	}
 	
 }

@@ -27,6 +27,7 @@ import android.support.v4.app.FragmentManager;
 import cn.longkai.android.R;
 import cn.newgxu.android.notty.ui.NoticeFragment;
 import cn.newgxu.android.notty.util.C;
+import cn.newgxu.android.notty.util.ThemeUtils;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.MenuItem;
@@ -44,6 +45,7 @@ public class NoticeActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ThemeUtils.switchTheme(this);
 		setContentView(R.layout.fragment_container);
 		
 		fm = getSupportFragmentManager();

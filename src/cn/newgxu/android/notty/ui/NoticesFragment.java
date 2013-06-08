@@ -56,6 +56,9 @@ public class NoticesFragment extends ListFragment implements LoaderCallbacks<Cur
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		if (mAdapter == null) {
+			mAdapter = new NoticesAdapter(getActivity());
+		}
 		setListAdapter(mAdapter);
 		getLoaderManager().initLoader(0, null, this);
 	}
@@ -82,6 +85,4 @@ public class NoticesFragment extends ListFragment implements LoaderCallbacks<Cur
 		mAdapter.swapCursor(null);
 	}
 	
-	
-
 }

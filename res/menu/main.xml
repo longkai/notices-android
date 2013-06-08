@@ -30,6 +30,15 @@
                         android:title="@string/dark_theme"/>
                 </menu>
             </item>
+            <item
+                android:id="@+id/about"
+                android:title="@string/about"
+                android:icon="@drawable/action_about_dark"
+                android:showAsAction="never" />
+            <item
+                android:id="@+id/logout"
+                android:title="@string/logout"
+                android:showAsAction="never" />
         </menu>
     </item>
 

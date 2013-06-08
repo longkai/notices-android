@@ -46,4 +46,9 @@
 	<string name="waiting">信息正在发送中，请稍后&#8230;</string>
 	<string name="not_available">您好，出于一些实际原因，目前在Android客户端上无法发送信息，建议您电脑浏览器发布，或者，您可以向雨无声提出开通这项功能的申请:-)</string>
 	<string name="network_down">亲，您的网络不给力啊-.-</string>
+	
+	<string name="fetch_interval">自动更新频率</string>
+	<string name="about">关于</string>
+	<string name="version">版本</string>
+	<string name="about_text">这是雨无声官方的校园信息客户端，欢迎广大师生的使用与关注！\n\n开发者：龙凯；制图：陆鹏\n\n有任何建议欢迎联系雨无声或者作者：im.longkai@gmail.com</string>
 </resources>

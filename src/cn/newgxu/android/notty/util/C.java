@@ -52,6 +52,8 @@ public final class C {
 	public static final int		OK			= 1;
 	public static final int		NO			= 0;
 	
+	public static final String INTERVAL = "interval";
+	
 	public static final String ACCOUNT = "account";
 	public static final String PWD = "pwd";
 	

@@ -22,7 +22,10 @@
  */
 package cn.newgxu.android.notty;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerTabStrip;
@@ -30,6 +33,7 @@ import android.support.v4.view.ViewPager;
 import cn.longkai.android.util.StrictModeUtils;
 import cn.newgxu.android.notty.adapter.NottyPagerAdapter;
 import cn.newgxu.android.notty.service.FetchService;
+import cn.newgxu.android.notty.ui.AboutBoxDialogFragment;
 import cn.newgxu.android.notty.util.C;
 import cn.newgxu.android.notty.util.ThemeUtils;
 
@@ -39,30 +43,35 @@ import com.actionbarsherlock.view.MenuItem;
 
 /**
  * 应用程序主界面。
+ * 
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
  * @since  2013-6-5
  */
 public class MainActivity extends SherlockFragmentActivity {
 
-	private static final String TAG = MainActivity.class.getSimpleName();
-	
-	private FragmentManager fm;
-	
+	private static final String	TAG	= MainActivity.class.getSimpleName();
+
+	private FragmentManager		fm;
+	private NottyApplication	app;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		StrictModeUtils.useStrictMode(getApplicationContext()); // enable strict
 		ThemeUtils.switchTheme(this);
 		setContentView(R.layout.main);
+		app = NottyApplication.getApp();
 		getSupportActionBar().setTitle(R.string.app_title);
-		
+
 		fm = getSupportFragmentManager();
 		ViewPager pager = (ViewPager) findViewById(R.id.pager);
 		pager.setAdapter(new NottyPagerAdapter(fm));
 		pager.setCurrentItem(NottyPagerAdapter.LATEST_NOTICES);
-		PagerTabStrip pagerTabStrip = (PagerTabStrip) pager.findViewById(R.id.pager_tab_strip);
-		pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.info));
+		PagerTabStrip pagerTabStrip = (PagerTabStrip) pager
+				.findViewById(R.id.pager_tab_strip);
+		pagerTabStrip.setTabIndicatorColor(getResources()
+				.getColor(R.color.info));
 	}
 
 	@Override
@@ -82,15 +91,26 @@ public class MainActivity extends SherlockFragmentActivity {
 			break;
 		case R.id.refresh:
 			Intent intent = new Intent(this, FetchService.class);
-			String[] uris = {C.BASE_URI + C.NOTICES, C.BASE_URI + C.USERS};
+			String[] uris = { C.BASE_URI + C.NOTICES, C.BASE_URI + C.USERS };
 			intent.putExtra("uris", uris);
-			intent.putExtra(C.URI, C.DOMAIN + "/info/notices?type=1&count=10");
+//			TODO: 这里，由于自己时间问题，暂时硬编码了，服务端的代码也需要修改一下。
+			intent.putExtra(C.URI, C.DOMAIN + "/info/notices?type=1&count=50");
 			startService(intent);
+			break;
+		case R.id.logout:
+			Intent i = new Intent(Intent.ACTION_MAIN);
+			i.addCategory(Intent.CATEGORY_HOME);
+			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(i);
+			break;
+		case R.id.about:
+			AboutBoxDialogFragment about = new AboutBoxDialogFragment();
+			about.show(fm, "about");
 			break;
 		default:
 			break;
 		}
 		return true;
 	}
-	
+
 }

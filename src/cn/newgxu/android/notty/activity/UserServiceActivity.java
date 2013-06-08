@@ -32,6 +32,7 @@ import cn.newgxu.android.notty.R;
 import cn.newgxu.android.notty.ui.CreateNoticeFragment;
 import cn.newgxu.android.notty.ui.UserServiceFragment;
 import cn.newgxu.android.notty.util.C;
+import cn.newgxu.android.notty.util.ThemeUtils;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
@@ -50,6 +51,7 @@ public class UserServiceActivity extends SherlockFragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		ThemeUtils.switchTheme(this);
 		setContentView(cn.longkai.android.R.layout.fragment_container);
 		
 		fm = getSupportFragmentManager();
