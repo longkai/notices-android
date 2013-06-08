@@ -20,50 +20,34 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package cn.newgxu.android.notty;
+package cn.newgxu.android.notty.activity;
 
-import android.app.Application;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
-import android.preference.PreferenceManager;
-import cn.longkai.android.util.HttpClientProvider;
-import cn.longkai.android.util.L;
+import cn.newgxu.android.notty.MainActivity;
+import cn.newgxu.android.notty.R;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
 
 /**
- * app全局对象
+ * 首次进入应用时出现的界面。
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
- * @since  2013-6-5
+ * @since  2013-6-9
  */
-public class NottyApplication extends Application implements OnSharedPreferenceChangeListener {
-	
-	private static final String TAG = NottyApplication.class.getSimpleName();
-	public static final String ACTION = System.currentTimeMillis() + "";
-	
-	private static NottyApplication sApp;
-	
-	public static NottyApplication getApp() {
-		return sApp;
-	}
-
-	private SharedPreferences prefs;
-	
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		sApp = this;
-		HttpClientProvider.init(sApp); // 初始化http client
-	}
+public class HelloActivity extends Activity {
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
-		L.d(TAG, "changed key: %s", key);
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.hello);
+		
+		new Handler().postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				startActivity(new Intent(HelloActivity.this, MainActivity.class));
+			}
+		}, getResources().getInteger(R.integer.splash_time));
 	}
-	
-	public SharedPreferences getPrefs() {
-		return this.prefs;
-	}
-	
+
 }

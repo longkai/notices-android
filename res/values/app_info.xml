@@ -2,4 +2,5 @@
 <resources>
     <integer name="db_version">1</integer>
     <string name="db_name">notty.db</string>
+    <integer name="splash_time">3000</integer>
 </resources>

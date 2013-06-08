@@ -22,26 +22,24 @@
  */
 package cn.newgxu.android.notty.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.app.IntentService;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Handler;
+import android.util.Log;
+import android.widget.Toast;
 import cn.longkai.android.util.L;
 import cn.longkai.android.util.NetworkUtils;
 import cn.longkai.android.util.RESTMethod;
 import cn.newgxu.android.notty.R;
 import cn.newgxu.android.notty.util.C;
 import cn.newgxu.android.notty.util.Processor;
-import android.app.IntentService;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Handler;
-import android.widget.Toast;
 
 /**
  * 负责抓取云端信息的服务线程。
@@ -84,8 +82,14 @@ public class FetchService extends IntentService {
 //		default:
 //			break;
 //		}
-		if (NetworkUtils.connected(getApplicationContext())) {
-			JSONObject result = RESTMethod.get(intent.getStringExtra(C.URI));
+		if (NetworkUtils.connected(getApplicationContext())) {	
+			Cursor c = getContentResolver().query(Uri.parse(C.BASE_URI + C.NOTICES), C.notice.LATEST_NOTICE_ID, null, null, null);
+			String uri = intent.getStringExtra(C.URI);
+			if (c.moveToNext()) {
+				uri += "&local_nid=" + c.getLong(0);
+			}
+			Log.d(TAG, String.format("uri: %s", uri));
+			JSONObject result = RESTMethod.get(uri);
 			L.d(TAG, "json: %s", result);
 			try {
 				JSONArray notices = result.getJSONArray(C.NOTICES);
@@ -100,6 +104,14 @@ public class FetchService extends IntentService {
 				String[] uris = intent.getStringArrayExtra("uris");
 				getContentResolver().bulkInsert(Uri.parse(uris[0]), noticeValues);
 				getContentResolver().bulkInsert(Uri.parse(uris[1]), userValues);
+				
+				final int newerCount = notices.length();
+				handler.post(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(getApplicationContext(), getString(R.string.newer_count, newerCount), Toast.LENGTH_SHORT).show();
+					}
+				});
 			} catch (JSONException e) {
 				throw new RuntimeException("ERROR when resolving json -> " + result, e);
 			} 

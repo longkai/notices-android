@@ -22,10 +22,7 @@
  */
 package cn.newgxu.android.notty;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerTabStrip;
@@ -53,7 +50,6 @@ public class MainActivity extends SherlockFragmentActivity {
 	private static final String	TAG	= MainActivity.class.getSimpleName();
 
 	private FragmentManager		fm;
-	private NottyApplication	app;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +57,6 @@ public class MainActivity extends SherlockFragmentActivity {
 		StrictModeUtils.useStrictMode(getApplicationContext()); // enable strict
 		ThemeUtils.switchTheme(this);
 		setContentView(R.layout.main);
-		app = NottyApplication.getApp();
 		getSupportActionBar().setTitle(R.string.app_title);
 
 		fm = getSupportFragmentManager();
@@ -93,8 +88,8 @@ public class MainActivity extends SherlockFragmentActivity {
 			Intent intent = new Intent(this, FetchService.class);
 			String[] uris = { C.BASE_URI + C.NOTICES, C.BASE_URI + C.USERS };
 			intent.putExtra("uris", uris);
-//			TODO: 这里，由于自己时间问题，暂时硬编码了，服务端的代码也需要修改一下。
-			intent.putExtra(C.URI, C.DOMAIN + "/info/notices?type=1&count=50");
+//			TODO: 这里，由于自己时间问题，暂时硬编码了，到时候需求大了需要配置一下
+			intent.putExtra(C.URI, C.DOMAIN + "/info/notices?type=4&count=50");
 			startService(intent);
 			break;
 		case R.id.logout:

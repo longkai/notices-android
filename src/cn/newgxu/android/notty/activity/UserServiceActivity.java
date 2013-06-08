@@ -26,10 +26,8 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.widget.Toast;
-
 import cn.newgxu.android.notty.NottyApplication;
 import cn.newgxu.android.notty.R;
-import cn.newgxu.android.notty.ui.CreateNoticeFragment;
 import cn.newgxu.android.notty.ui.UserServiceFragment;
 import cn.newgxu.android.notty.util.C;
 import cn.newgxu.android.notty.util.ThemeUtils;

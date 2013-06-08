@@ -46,6 +46,7 @@
 	<string name="waiting">信息正在发送中，请稍后&#8230;</string>
 	<string name="not_available">您好，出于一些实际原因，目前在Android客户端上无法发送信息，建议您电脑浏览器发布，或者，您可以向雨无声提出开通这项功能的申请:-)</string>
 	<string name="network_down">亲，您的网络不给力啊-.-</string>
+	<string name="newer_count">有 %1$d 条更新！</string>
 	
 	<string name="fetch_interval">自动更新频率</string>
 	<string name="about">关于</string>
