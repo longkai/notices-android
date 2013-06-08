@@ -24,11 +24,26 @@
     <string name="auth_uri">http://lab.newgxu.cn/resources/html/info/auth.html</string>
     
     <string name="login_box">登陆 :-)</string>
+    <string name="go_to_service">进入我的用户中心</string>
     <string name="account">请输入您的账号</string>
     <string name="password">请输入您的密码</string>
     <string name="ok">确定</string>
     <string name="no">取消</string>
     <string name="login_error">登陆异常！请稍后再试！</string>
     <string name="login_ok">登陆成功^_^</string>
-    <string name="login_no">登陆失败-_-</string>
+    <string name="login_no">登陆失败-_-\t</string>
+    
+    <string name="user_service">用户中心</string>
+    <string name="create">新建信息</string>
+    <string name="user_notices">我发布过的信息</string>
+	<string name="logout">退出登陆</string>
+	
+	<string name="create_notice">创建新信息</string>
+	<string name="title_hint">别漏了标题哦亲</string>
+	<string name="content_hint">正文&#8230;</string>
+	<string name="submit">提交</string>
+	
+	<string name="waiting">信息正在发送中，请稍后&#8230;</string>
+	<string name="not_available">您好，出于一些实际原因，目前在Android客户端上无法发送信息，建议您电脑浏览器发布，或者，您可以向雨无声提出开通这项功能的申请:-)</string>
+	<string name="network_down">亲，您的网络不给力啊-.-</string>
 </resources>

@@ -4,12 +4,12 @@
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     -->
-    <style name="AppTheme" parent="android:Theme.Light">
-       <item name="refresh_icon">@drawable/navigation_refresh_light</item>
-       <item name="user_icon">@drawable/social_person_light</item>
+    <style name="AppTheme" parent="Theme.Sherlock.Light.DarkActionBar">
+       <item name="refresh_icon">@drawable/navigation_refresh_dark</item>
+       <item name="user_icon">@drawable/social_person_dark</item>
     </style>
     
-    <style name="AppTheme_Dark" parent="android:Theme.Black">
+    <style name="AppTheme_Dark" parent="Theme.Sherlock.Light.DarkActionBar">
         <item name="refresh_icon">@drawable/navigation_refresh_dark</item>
 	    <item name="user_icon">@drawable/social_person_dark</item>
     </style>

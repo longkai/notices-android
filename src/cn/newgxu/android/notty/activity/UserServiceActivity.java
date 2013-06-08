@@ -20,77 +20,82 @@
  * OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-package cn.newgxu.android.notty;
+package cn.newgxu.android.notty.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.PagerTabStrip;
-import android.support.v4.view.ViewPager;
-import cn.longkai.android.util.StrictModeUtils;
-import cn.newgxu.android.notty.adapter.NottyPagerAdapter;
-import cn.newgxu.android.notty.service.FetchService;
+import android.widget.Toast;
+
+import cn.newgxu.android.notty.NottyApplication;
+import cn.newgxu.android.notty.R;
+import cn.newgxu.android.notty.ui.CreateNoticeFragment;
+import cn.newgxu.android.notty.ui.UserServiceFragment;
 import cn.newgxu.android.notty.util.C;
-import cn.newgxu.android.notty.util.ThemeUtils;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 /**
- * 应用程序主界面。
+ * 用户自服务活动。
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
- * @since  2013-6-5
+ * @since  2013-6-8
  */
-public class MainActivity extends SherlockFragmentActivity {
+public class UserServiceActivity extends SherlockFragmentActivity {
 
-	private static final String TAG = MainActivity.class.getSimpleName();
-	
 	private FragmentManager fm;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		StrictModeUtils.useStrictMode(getApplicationContext()); // enable strict
-		ThemeUtils.switchTheme(this);
-		setContentView(R.layout.main);
-		getSupportActionBar().setTitle(R.string.app_title);
+		setContentView(cn.longkai.android.R.layout.fragment_container);
 		
 		fm = getSupportFragmentManager();
-		ViewPager pager = (ViewPager) findViewById(R.id.pager);
-		pager.setAdapter(new NottyPagerAdapter(fm));
-		pager.setCurrentItem(NottyPagerAdapter.LATEST_NOTICES);
-		PagerTabStrip pagerTabStrip = (PagerTabStrip) pager.findViewById(R.id.pager_tab_strip);
-		pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.info));
+		getSupportActionBar().setTitle(NottyApplication.getApp().getPrefs().getString(C.user.AUTHED_NAME, null));
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		UserServiceFragment fragment = new UserServiceFragment();
+		fm.beginTransaction().replace(cn.longkai.android.R.id.fragment_container, fragment).commit();
 	}
-
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getSupportMenuInflater().inflate(R.menu.main, menu);
-		return true;
+		getSupportMenuInflater().inflate(R.menu.service, menu);
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Fragment fragment = null;
 		switch (item.getItemId()) {
-		case R.id.dark_theme:
-			ThemeUtils.apply(this, ThemeUtils.DARK_THEME);
+		case android.R.id.home:
+			finish();
 			break;
-		case R.id.light_theme:
-			ThemeUtils.apply(this, ThemeUtils.LIGHT_THEME);
+		case R.id.create:
+//			current, due to the server and the client' s not well equiped,
+//			so currentlly, allowing use publish notices from android is not available.
+//			if (fm.findFragmentByTag("create") == null) {
+//				fragment = new CreateNoticeFragment();
+//			}
+			Toast.makeText(this, R.string.not_available, Toast.LENGTH_SHORT).show();
 			break;
-		case R.id.refresh:
-			Intent intent = new Intent(this, FetchService.class);
-			String[] uris = {C.BASE_URI + C.NOTICES, C.BASE_URI + C.USERS};
-			intent.putExtra("uris", uris);
-			intent.putExtra(C.URI, C.DOMAIN + "/info/notices?type=1&count=10");
-			startService(intent);
+		case R.id.notices:
+			if (fm.findFragmentByTag("notices") == null) {
+				fragment = new UserServiceFragment();
+			}
 			break;
 		default:
 			break;
 		}
+		if (fragment != null) {
+			fm.beginTransaction()
+			.replace(cn.longkai.android.R.id.fragment_container, fragment)
+			.addToBackStack(null)
+			.commit();
+		}
 		return true;
 	}
-	
+
 }

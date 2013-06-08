@@ -22,62 +22,115 @@
  */
 package cn.newgxu.android.notty.ui;
 
-import cn.newgxu.android.notty.R;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v4.widget.CursorAdapter;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import cn.newgxu.android.notty.NottyApplication;
+import cn.newgxu.android.notty.R;
+import cn.newgxu.android.notty.activity.NoticeActivity;
+import cn.newgxu.android.notty.util.C;
+
+import com.actionbarsherlock.app.SherlockListFragment;
 
 /**
- * 用户服务界面片段。
+ * 用户服务中心
  * @author longkai(龙凯)
  * @email  im.longkai@gmail.com
- * @since  2013-6-7
+ * @since  2013-6-8
  */
-public class UserServiceFragment extends Fragment implements OnClickListener {
+public class UserServiceFragment extends SherlockListFragment implements LoaderCallbacks<Cursor> {
 
+	private NoticesAdapter mAdapter;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRetainInstance(true);
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.service, container, false);
-		v.findViewById(R.id.login).setOnClickListener(this);
-		v.findViewById(R.id.go_to_auth).setOnClickListener(this);
-		return v;
+		mAdapter = new NoticesAdapter(getSherlockActivity());
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		setListAdapter(mAdapter);
+		getLoaderManager().initLoader(0, null, this);
+		getSherlockActivity().getSupportActionBar().setSubtitle(R.string.user_notices);
+		getSherlockActivity().getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+	}
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		Intent intent = new Intent(getActivity(), NoticeActivity.class);
+		intent.setData(Uri.parse(C.BASE_URI + C.NOTICES + "/" + id));
+		startActivity(intent);
 	}
 
 	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.go_to_auth:
-			Intent intent = new Intent(Intent.ACTION_VIEW);
-			intent.setData(Uri.parse(getString(R.string.auth_uri)));
-			startActivity(intent);
-			break;
-		case R.id.login:
-			LoginBoxFragment fragment = new LoginBoxFragment();
-			fragment.show(getFragmentManager(), "login");
-			break;
-		default:
-			break;
-		}
+	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+		SharedPreferences prefs = NottyApplication.getApp().getPrefs();
+		return new CursorLoader(getActivity(), Uri.parse(C.BASE_URI + C.NOTICES),
+				null, C.notice.USER_ID + "=" + prefs.getLong(C._ID, 0), null, null);
+	}
+
+	@Override
+	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+		mAdapter.swapCursor(data);
+	}
+
+	@Override
+	public void onLoaderReset(Loader<Cursor> loader) {
+		mAdapter.swapCursor(null);
 	}
 	
+	private static class NoticesAdapter extends CursorAdapter {
+
+		public NoticesAdapter(Context context) {
+			super(context, null, 0);
+		}
+
+		private static class ViewHolder {
+			TextView title;
+			int titleIndex;
+			TextView addedTime;
+			int addedTimeIndex;
+		}
+		
+		@Override
+		public View newView(Context context, Cursor cursor, ViewGroup parent) {
+			View v = LayoutInflater.from(context).inflate(android.R.layout.simple_list_item_2, null);
+			ViewHolder holder = new ViewHolder();
+			
+			holder.title = (TextView) v.findViewById(android.R.id.text1);
+			holder.addedTime = (TextView) v.findViewById(android.R.id.text2);
+			holder.addedTimeIndex = cursor.getColumnIndex(C.notice.ADDED_DATE);
+			holder.titleIndex = cursor.getColumnIndex(C.notice.TITLE);
+			
+			v.setTag(holder);
+			return v;
+		}
+
+		@Override
+		public void bindView(View view, Context context, Cursor cursor) {
+			ViewHolder holder = (ViewHolder) view.getTag();
+			holder.title.setText(cursor.getString(holder.titleIndex));
+			long t = cursor.getLong(holder.addedTimeIndex);
+			holder.addedTime.setText(DateUtils.getRelativeTimeSpanString(t));
+		}
+		
+	}
+
 }

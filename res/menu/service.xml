@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/user_service"
+        android:title="@string/user_service"
+        android:icon="@drawable/social_person_dark"
+        android:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/create"
+                android:title="@string/create"
+                android:icon="@drawable/content_new_dark" />
+            <item
+                android:id="@+id/notices"
+                android:title="@string/user_notices"
+                android:icon="@drawable/collections_view_as_list_dark" />
+        </menu>
+    </item>
+
+</menu>

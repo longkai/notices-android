@@ -31,6 +31,7 @@ import cn.longkai.android.util.StyleUtils;
 import cn.newgxu.android.notty.MainActivity;
 import cn.newgxu.android.notty.NottyApplication;
 import cn.newgxu.android.notty.R;
+import cn.newgxu.android.notty.activity.UserServiceActivity;
 import cn.newgxu.android.notty.util.C;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -77,12 +78,14 @@ public class LoginBoxFragment extends DialogFragment {
 				.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						final String _account = account.getEditableText().toString();
-						final String _pwd = pwd.getEditableText().toString();
 						progressDialog = ProgressDialog.show(getActivity(), "login...", "login...");
 						new Handler().post(new Runnable() {
 							@Override
 							public void run() {
+								String _account = account.getEditableText().toString();
+								String _pwd = pwd.getEditableText().toString();
+								NottyApplication app = NottyApplication.getApp();
+								SharedPreferences prefs = app.getPrefs();
 								try {
 									JSONObject result = RESTMethod.get(C.DOMAIN
 											+ "/info/login?account=" + _account + "&pwd=" + _pwd);
@@ -91,10 +94,12 @@ public class LoginBoxFragment extends DialogFragment {
 										SharedPreferences.Editor editor = NottyApplication.getApp().getPrefs().edit();
 										editor.putString(C.ACCOUNT, _account);
 										editor.putString(C.PWD, _pwd);
+										JSONObject u = result.getJSONObject(C.USER);
+										editor.putLong(C._ID, u.getLong(C.ID));
+										editor.putString(C.user.AUTHED_NAME, u.getString(C.user.AUTHED_NAME));
 										editor.commit();
 										Toast.makeText(getActivity(), R.string.login_ok, Toast.LENGTH_SHORT).show();
-										Intent intent = new Intent(Intent.ACTION_VIEW);
-										intent.setData(Uri.parse("http://lab.newgxu.cn"));
+										Intent intent = new Intent(getActivity(), UserServiceActivity.class);
 										startActivity(intent);
 									} else {
 										Toast.makeText(getActivity(), getString(R.string.login_no) + ": "

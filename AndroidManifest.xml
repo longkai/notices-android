@@ -24,6 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name="cn.newgxu.android.notty.activity.NoticeActivity" />
+        <activity android:name="cn.newgxu.android.notty.activity.UserServiceActivity"
+            android:windowSoftInputMode="adjustResize" />
         <service android:name="cn.newgxu.android.notty.service.FetchService" />
         <provider
             android:name="cn.newgxu.android.notty.provider.NottyProvider"

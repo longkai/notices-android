@@ -22,6 +22,10 @@
  */
 package cn.newgxu.android.notty.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,12 +33,15 @@ import org.json.JSONObject;
 import cn.longkai.android.util.L;
 import cn.longkai.android.util.NetworkUtils;
 import cn.longkai.android.util.RESTMethod;
+import cn.newgxu.android.notty.R;
 import cn.newgxu.android.notty.util.C;
 import cn.newgxu.android.notty.util.Processor;
 import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.widget.Toast;
 
 /**
  * 负责抓取云端信息的服务线程。
@@ -46,12 +53,37 @@ public class FetchService extends IntentService {
 
 	private static final String TAG = FetchService.class.getSimpleName();
 	
+	private Handler handler;
+	
 	public FetchService() {
 		super(TAG);
 	}
 
 	@Override
+	public void onCreate() {
+		super.onCreate();
+		handler = new Handler();
+	}
+
+	@Override
 	protected void onHandleIntent(Intent intent) {
+//		int method = intent.getIntExtra("method", RESTMethod.GET);
+//		switch (method) {
+//		case RESTMethod.GET:
+//			break;
+//		case RESTMethod.POST:
+//			Map<String, Object> params = new HashMap<String, Object>();
+//			params.put(C.notice.TITLE, intent.getStringExtra(C.notice.TITLE));
+//			params.put(C.notice.CONTENT, intent.getStringExtra(C.notice.CONTENT));
+//			L.d(TAG, "post result: %s", result);
+//			ContentValues values = new ContentValues();
+//			values.put(C.notice.TITLE, intent.getStringExtra(C.notice.TITLE));
+//			values.put(C.notice.CONTENT, intent.getStringExtra(C.notice.CONTENT));
+//			getContentResolver().insert(Uri.parse(C.BASE_URI + C.NOTICES), values);
+//			return;
+//		default:
+//			break;
+//		}
 		if (NetworkUtils.connected(getApplicationContext())) {
 			JSONObject result = RESTMethod.get(intent.getStringExtra(C.URI));
 			L.d(TAG, "json: %s", result);
@@ -69,8 +101,15 @@ public class FetchService extends IntentService {
 				getContentResolver().bulkInsert(Uri.parse(uris[0]), noticeValues);
 				getContentResolver().bulkInsert(Uri.parse(uris[1]), userValues);
 			} catch (JSONException e) {
-				throw new RuntimeException("ERROR when resolving json -> " + result);
+				throw new RuntimeException("ERROR when resolving json -> " + result, e);
 			} 
+		} else {
+			handler.post(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(getApplicationContext(), R.string.network_down, Toast.LENGTH_SHORT).show();
+				}
+			});
 		}
 	}
 
